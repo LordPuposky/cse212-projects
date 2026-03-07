@@ -28,7 +28,9 @@ public class MultiplesOfTests
 }
 
 [TestClass]
-public class RotateListRightTests
+public class
+
+RotateListRightTests
 {
     [TestMethod]
     public void TestRotateListRight_Rotate1()
