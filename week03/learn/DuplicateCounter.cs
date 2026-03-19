@@ -1,4 +1,7 @@
-﻿public class DuplicateCounter
+﻿using System;
+using System.Collections.Generic;
+
+public class DuplicateCounter
 {
     //Count how many duplicates are in a collection of data.
 
@@ -24,7 +27,18 @@
 
     private static int CountDuplicates(int[] data)
     {
-        // Add code here.
-        return 0;
+        var seen = new HashSet<int>();
+        int count = 0;
+
+        foreach (var item in data)
+        {
+            // If Add returns false, the item was already in the set.
+            if (!seen.Add(item))
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }
