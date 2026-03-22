@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 /// <summary>
 /// Defines a maze using a dictionary. The dictionary is provided by the
 /// user when the Maze object is created. The dictionary will contain the
@@ -9,7 +12,7 @@
 /// 'left', 'right', 'up', and 'down' are boolean are represent valid directions
 ///
 /// If a direction is false, then we can assume there is a wall in that direction.
-/// If a direction is true, then we can proceed.  
+/// If a direction is true, then we can proceed.
 ///
 /// If there is a wall, then throw an InvalidOperationException with the message "Can't go that way!".  If there is no wall,
 /// then the 'currX' and 'currY' values should be changed.
@@ -25,14 +28,21 @@ public class Maze
         _mazeMap = mazeMap;
     }
 
-    // TODO Problem 4 - ADD YOUR CODE HERE
     /// <summary>
     /// Check to see if you can move left.  If you can, then move.  If you
     /// can't move, throw an InvalidOperationException with the message "Can't go that way!".
     /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+        // Check if the left direction (index 0) is allowed at current coordinates
+        if (_mazeMap[(_currX, _currY)][0])
+        {
+            _currX -= 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -41,7 +51,15 @@ public class Maze
     /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        // Check if the right direction (index 1) is allowed at current coordinates
+        if (_mazeMap[(_currX, _currY)][1])
+        {
+            _currX += 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -50,7 +68,15 @@ public class Maze
     /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+        // Check if the up direction (index 2) is allowed at current coordinates
+        if (_mazeMap[(_currX, _currY)][2])
+        {
+            _currY -= 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -59,7 +85,15 @@ public class Maze
     /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        // Check if the down direction (index 3) is allowed at current coordinates
+        if (_mazeMap[(_currX, _currY)][3])
+        {
+            _currY += 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     public string GetStatus()

@@ -3,9 +3,9 @@ using System.Text.Json;
 public static class SetsAndMaps
 {
     /// <summary>
-    /// The words parameter contains a list of two character 
-    /// words (lower case, no duplicates). Using sets, find an O(n) 
-    /// solution for returning all symmetric pairs of words.  
+    /// The words parameter contains a list of two character
+    /// words (lower case, no duplicates). Using sets, find an O(n)
+    /// solution for returning all symmetric pairs of words.
     ///
     /// For example, if words was: [am, at, ma, if, fi], we would return :
     ///
@@ -21,8 +21,30 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        // We use a HashSet to store words we have already encountered.
+        // This allows for O(1) lookups, making the overall solution O(n).
+        var seen = new HashSet<string>();
+        var results = new List<string>();
+
+        foreach (var word in words)
+        {
+            // Reverse the current 2-character word
+            string reversed = $"{word[1]}{word[0]}";
+
+            // Check if the reversed version is already in our set
+            if (seen.Contains(reversed))
+            {
+                // If found, we have a symmetric pair
+                results.Add($"{reversed} & {word}");
+            }
+            else
+            {
+                // If not found, add the current word to the set
+                seen.Add(word);
+            }
+        }
+
+        return results.ToArray();
     }
 
     /// <summary>
@@ -42,9 +64,15 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+            if (fields.Length >= 4)
+            {
+                var degree = fields[3].Trim();
+                if (degrees.ContainsKey(degree))
+                    degrees[degree]++;
+                else
+                    degrees[degree] = 1;
+            }
         }
-
         return degrees;
     }
 
@@ -65,10 +93,26 @@ public static class SetsAndMaps
     /// using the [] notation.
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
+{
+    var counts = new int[256];
+
+    foreach (var c in word1)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        if (c == ' ') continue;
+        counts[char.ToLower(c)]++;
     }
+
+    foreach (var c in word2)
+    {
+        if (c == ' ') continue;
+        counts[char.ToLower(c)]--;
+    }
+
+    foreach (var count in counts)
+        if (count != 0) return false;
+
+    return true;
+}
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
@@ -101,6 +145,8 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+        return featureCollection.Features
+    .Select(f => $"{f.Properties.Place} - Mag {f.Properties.Mag}")
+    .ToArray();
     }
 }
